@@ -1,31 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
-      
-<h:head>
-	<title>Gestão de Empresas</title>
-</h:head>
-
-<h:body>
-      <f:metadata>
-      	<f:viewAction action="#{gestaoEmpresasBean.consultar}" />
-      </f:metadata>
-
-		<p:dataTable value="#{gestaoEmpresasBean.todasEmpresas}" var="empresa"
-			emptyMessage="Nenhuma empresa cadastrada.">
-			<p:column headerText="Razão social">
-				<h:outputText value="#{empresa.razaoSocial}" />
-			</p:column>
-			<p:column headerText="Nome fantasia" width="250">
-				<h:outputText value="#{empresa.nomeFantasia}" />
-			</p:column>
-			<p:column headerText="CNPJ" width="160">
-				<h:outputText value="#{empresa.cnpj}" />
-			</p:column>
-		</p:dataTable>
-</h:body>
-
-</html>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+	
+	<h1>Cadastro de Empresas</h1>
+	
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{gestaoEmpresasBean.consultar}" />
+		</f:metadata>
+		<h:form>
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Nova" icon="ui-icon-document"/>
+					
+		            <span class="ui-separator">
+		                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+		            </span>
+		            
+	            <p:commandButton title="Editar" icon="ui-icon-pencil" />
+	            <p:commandButton title="Excluir" icon="ui-icon-trash" />
+	            <p:commandButton title="Exportar para XLS" icon="ui-icon-arrowthick-1-s" />		            					
+				</f:facet>
+			</p:toolbar>
+		
+			<p:dataTable value="#{gestaoEmpresasBean.todasEmpresas}"
+				var="empresa" emptyMessage="Nenhuma empresa cadastrada." rows="10"
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px">
+				<p:column headerText="Razão social" sortBy="#{empresa.razaoSocial}">
+					<h:outputText value="#{empresa.razaoSocial}" />
+				</p:column>
+				<p:column headerText="Nome fantasia" width="250">
+					<h:outputText value="#{empresa.nomeFantasia}" />
+				</p:column>
+				<p:column headerText="CNPJ" width="160">
+					<h:outputText value="#{empresa.cnpj}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
