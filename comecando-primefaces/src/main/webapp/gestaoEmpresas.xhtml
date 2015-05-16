@@ -11,10 +11,13 @@
 		<f:metadata>
 			<f:viewAction action="#{gestaoEmpresasBean.consultar}" />
 		</f:metadata>
-		<h:form>
+		<h:form id="frm">
 			<p:toolbar>
 				<f:facet name="left">
-					<p:commandButton value="Nova" icon="ui-icon-document"/>
+					<p:commandButton value="Nova" icon="ui-icon-document"
+						action="#{gestaoEmpresasBean.prepararNovoCadastro}"
+						oncomplete="PF('diaglogEdicaoEmpresas').show()"
+						process="@this" update="dialog-empresas"/>
 					
 		            <span class="ui-separator">
 		                <span class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -28,8 +31,8 @@
 		
 			<p:dataTable value="#{gestaoEmpresasBean.todasEmpresas}"
 				var="empresa" emptyMessage="Nenhuma empresa cadastrada." rows="10"
-				paginator="true" paginatorPosition="bottom" style="margin-top: 10px">
-				<p:column headerText="Razão social" sortBy="#{empresa.razaoSocial}">
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px" id="empresa-table">
+				<p:column headerText="Razão social" sortBy="#{empresa.razaoSocial}" >
 					<h:outputText value="#{empresa.razaoSocial}" />
 				</p:column>
 				<p:column headerText="Nome fantasia" width="250">
@@ -39,6 +42,45 @@
 					<h:outputText value="#{empresa.cnpj}" />
 				</p:column>
 			</p:dataTable>
+
+			<p:dialog header="Cadastro de Empresa"
+				widgetVar="diaglogEdicaoEmpresas" id="dialog-empresas" modal="true" 
+				resizable="false" closeOnEscape="true">
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome fantasia" for="nomeFantasia" />
+					<p:inputText id="nomeFantasia" size="60" maxlength="80"
+						value="#{gestaoEmpresasBean.empresa.nomeFantasia}" />
+
+					<p:outputLabel value="Razão social" for="razaoSocial" />
+					<p:inputText id="razaoSocial" size="60" maxlength="120"
+						value="#{gestaoEmpresasBean.empresa.razaoSocial}" />
+
+					<p:outputLabel value="CNPJ" for="cnpj" />
+					<p:inputText id="cnpj" size="18" maxlength="18"
+						value="#{gestaoEmpresasBean.empresa.cnpj}" />
+
+					<p:outputLabel value="Data de fundação" for="dataFundacao" />
+					<p:inputText id="dataFundacao" size="10" maxlength="10"
+						value="#{gestaoEmpresasBean.empresa.dataFundacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+
+					<p:outputLabel value="Tipo" for="tipo" />
+					<p:selectOneMenu id="tipo"
+						value="#{gestaoEmpresasBean.empresa.tipo}" >
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{gestaoEmpresasBean.tiposEmpresas}"
+							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel />
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{gestaoEmpresasBean.salvar}"
+						process="dialog-empresas" update="empresa-table"
+						oncomplete="PF('diaglogEdicaoEmpresas').hide()" />
+				</h:panelGrid>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>
