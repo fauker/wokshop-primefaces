@@ -11,6 +11,9 @@
 		<f:metadata>
 			<f:viewAction action="#{gestaoEmpresasBean.consultar}" />
 		</f:metadata>
+		
+		<p:messages autoUpdate="true" />
+		
 		<h:form id="frm">
 			<p:toolbar>
 				<f:facet name="left">
@@ -46,8 +49,10 @@
 			<p:dialog header="Cadastro de Empresa"
 				widgetVar="diaglogEdicaoEmpresas" id="dialog-empresas" modal="true" 
 				resizable="false" closeOnEscape="true">
+				
+				<p:messages id="dialogMessages"/>
 
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="2" id="panel-dialog">
 					<p:outputLabel value="Nome fantasia" for="nomeFantasia" />
 					<p:inputText id="nomeFantasia" size="60" maxlength="80"
 						value="#{gestaoEmpresasBean.empresa.nomeFantasia}" />
@@ -75,10 +80,10 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel />
-					<p:commandButton value="Salvar" id="salvar-button"
+					<p:commandButton value="Salvar" id="salvar-button"	
 						action="#{gestaoEmpresasBean.salvar}"
-						process="dialog-empresas" update="empresa-table"
-						oncomplete="PF('diaglogEdicaoEmpresas').hide()" />
+						process="dialog-empresas" update="empresa-table dialogMessages panel-dialog"
+						oncomplete="if (!args.validationFailed) PF('diaglogEdicaoEmpresas').hide()" />
 				</h:panelGrid>
 			</p:dialog>
 		</h:form>
