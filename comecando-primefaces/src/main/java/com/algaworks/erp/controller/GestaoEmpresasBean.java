@@ -1,16 +1,20 @@
 package com.algaworks.erp.controller;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+
 import com.algaworks.erp.model.Empresa;
 import com.algaworks.erp.model.TipoEmpresa;
 import com.algaworks.erp.repository.Empresas;
 import com.algaworks.erp.service.CadastroEmpresaService;
+import com.algaworks.erp.util.FacesMessages;
 
 @Named
 @ViewScoped
@@ -24,6 +28,9 @@ public class GestaoEmpresasBean implements Serializable {
 	@Inject
 	private CadastroEmpresaService cadastroEmpresaService;
 	
+	@Inject
+	private FacesMessages messages;
+	
 	private List<Empresa> todasEmpresas;
 	private Empresa empresa = new Empresa();
 	
@@ -34,6 +41,11 @@ public class GestaoEmpresasBean implements Serializable {
 	public void salvar() {
 		cadastroEmpresaService.salvar(empresa);
 		consultar();
+		
+		messages.info("Empresa cadastrada com sucesso!");
+		
+		RequestContext.getCurrentInstance().update(
+				Arrays.asList("frm:msgs", "frm:empresas-table"));
 	}
 	
 	public void consultar() {
