@@ -19,7 +19,9 @@
 					<p:commandButton value="Nova" icon="ui-icon-document"
 						action="#{gestaoEmpresasBean.prepararNovoCadastro}"
 						oncomplete="PF('diaglogEdicaoEmpresas').show()"
-						process="@this" update="dialog-empresas"/>
+						process="@this" update="dialog-empresas">
+						<p:resetInput target="dialog-empresas" />
+					</p:commandButton>	
 					
 		            <span class="ui-separator">
 		                <span class="ui-icon ui-icon-grip-dotted-vertical" />
