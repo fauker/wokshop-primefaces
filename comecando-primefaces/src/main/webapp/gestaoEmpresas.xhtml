@@ -14,7 +14,7 @@
 		
 		<h:form id="frm">
 			<p:messages id="msgs" />
-			<p:toolbar>
+			<p:toolbar id="toolbar">
 				<f:facet name="left">
 					<p:commandButton value="Nova" icon="ui-icon-document"
 						action="#{gestaoEmpresasBean.prepararNovoCadastro}"
@@ -27,15 +27,22 @@
 		                <span class="ui-icon ui-icon-grip-dotted-vertical" />
 		            </span>
 		            
-	            <p:commandButton title="Editar" icon="ui-icon-pencil" />
-	            <p:commandButton title="Excluir" icon="ui-icon-trash" />
+	            <p:commandButton title="Editar" icon="ui-icon-pencil" 
+	            	disabled="#{gestaoEmpresasBean.empresaSelecionada == null}" />
+	            <p:commandButton title="Excluir" icon="ui-icon-trash"
+	            	disabled="#{gestaoEmpresasBean.empresaSelecionada == null}" />
 	            <p:commandButton title="Exportar para XLS" icon="ui-icon-arrowthick-1-s" />		            					
 				</f:facet>
 			</p:toolbar>
 		
 			<p:dataTable value="#{gestaoEmpresasBean.todasEmpresas}"
 				var="empresa" emptyMessage="Nenhuma empresa cadastrada." rows="10"
-				paginator="true" paginatorPosition="bottom" style="margin-top: 10px" id="empresas-table">
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px" id="empresas-table"
+				selectionMode="single" rowKey="#{empresa.id}" selection="#{gestaoEmpresasBean.empresaSelecionada}">
+				
+				<p:ajax event="rowSelect" update=":frm:toolbar"/>
+				<p:ajax event="rowUnselect" update=":frm:toolbar"/>
+				
 				<p:column headerText="Razão social" sortBy="#{empresa.razaoSocial}" >
 					<h:outputText value="#{empresa.razaoSocial}" />
 				</p:column>
