@@ -30,6 +30,7 @@
 	            <p:commandButton title="Editar" icon="ui-icon-pencil" 
 	            	disabled="#{gestaoEmpresasBean.empresaSelecionada == null}" />
 	            <p:commandButton title="Excluir" icon="ui-icon-trash"
+	            	action="#{gestaoEmpresasBean.excluir}" update="empresas-table toolbar msgs" process="@this"
 	            	disabled="#{gestaoEmpresasBean.empresaSelecionada == null}" />
 	            <p:commandButton title="Exportar para XLS" icon="ui-icon-arrowthick-1-s" />		            					
 				</f:facet>
