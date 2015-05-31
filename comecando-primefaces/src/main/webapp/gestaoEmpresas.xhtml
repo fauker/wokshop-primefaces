@@ -38,7 +38,10 @@
 	            	
 	            	
 	            </p:commandButton>	
-	            <p:commandButton title="Exportar para XLS" icon="ui-icon-arrowthick-1-s" />		            					
+	            <p:commandButton title="Exportar para XLS" icon="ui-icon-arrowthick-1-s" 
+	            	ajax="false" immediate="true">
+	            	<p:dataExporter type="xls" target="empresas-table" fileName="empresas"/>
+	            </p:commandButton>		            					
 				</f:facet>
 			</p:toolbar>
 		
